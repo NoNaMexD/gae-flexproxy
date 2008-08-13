@@ -1,3 +1,5 @@
+import re
+
 class QueryEngine:
     def _match(self, item, matcher, op='auto'):
         if (op == 'auto' and len(matcher) >= 3 and matcher[0] == '/' and matcher[-1] == '/'):

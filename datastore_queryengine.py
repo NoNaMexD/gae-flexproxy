@@ -7,7 +7,7 @@ from google.appengine.api import memcache
 from queryengine import *
 
 class ProxyACL(db.Model):
-  name = db.StringProperty(required=True)
+  name = db.StringProperty(required=False)
   item = db.StringProperty(required=True, choices=set(["url", "host"]))
   operator = db.StringProperty(required=True, choices=set(["exact", "regex"]))
   operand = db.StringProperty(required=True)
