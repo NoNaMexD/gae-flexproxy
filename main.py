@@ -24,6 +24,7 @@ from google.appengine.api import urlfetch
 import urllib
 import os
 import re
+import sys
 
 # import cgitb; cgitb.enable()
 
@@ -68,19 +69,13 @@ class FlexProxy:
         return hdr
 
     def process(self):
-        data = {
-          "api_key": "62efb891fc6ae7200a2699c566503735",
-          "user_app_key": "8425ab6700ac14eacdc77acf3283d69b-1217912257"
-        }
-        encoded_data = urllib.urlencode(data)
+        payload = ''
+        if os.environ.has_key('CONTENT_LENGTH'):
+            length = int(os.environ['CONTENT_LENGTH'].strip())
+            if (length > 0):
+                payload = sys.stdin.read(length)
         
         headers = {}
-        
-        # XXX: lame
-        # if (os.environ['HTTP_METHOD'].lower() == 'get'):
-        #     method = urlfetch.GET
-        # else:
-        #     method = urlfetch.POST
         
         method = self.method_map[ os.environ['REQUEST_METHOD'].lower() ]
         
@@ -94,30 +89,48 @@ class FlexProxy:
 
             if (val != None):
                 headers[hdr] = val
+
+        m = re.match('^/([^/]+)(/.*)$', os.environ['PATH_INFO'])
         
-        url="http://api.ping.fm/v1/user.latest"
+        if (m == None):
+            raise ValueError
         
-        m = re.search('^/([^/]+)(/.*)$', os.environ['PATH_INFO'])
+        url = "http://" + m.group(1) + m.group(2)
+
+        if os.environ.has_key('QUERY_STRING'):
+            query = os.environ['QUERY_STRING'].strip()
+            if (query != ''):
+                url = url + '?' + query
         
-        result = urlfetch.fetch(url,
-                                payload=encoded_data,
+        result = urlfetch.fetch(url=url,
+                                payload=payload,
                                 method=method,
                                 headers=headers)
 
         #
         # Process results
         #
+        if result.status_code == 200:
+            status_msg = "Proxied Request Succeeded"
+        else:
+            status_msg = "Oops"
+        print "Status: " + str(result.status_code) + " " + status_msg
 
+        print "Proxied-Url: " + url        
+        
         for name in result.headers:
             if (name.lower() == 'date'): continue
             val = result.headers[name]
             name = self.xlate_header(name)
             print name + ": " + val + "\r\n",
 
-        print
 
-        # for var in os.environ.keys():
-        #     print var + ": " + os.environ.get(var) + "\n"
+        print "ResultObject-Dir: " + ", ".join(dir(result))
+        print "Header-Keys: " + ", ".join(result.headers.keys())
+
+        # end headers and print content
+
+        print
 
         print result.content
 
