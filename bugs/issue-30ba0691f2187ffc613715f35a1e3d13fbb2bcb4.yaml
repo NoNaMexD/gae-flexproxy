@@ -1,0 +1,20 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: support mapping to hosts via wildcard subdomain (e.g. api.ping.fm.REALDOMAIN)
+desc: |-
+  right now mappings are done via the first path element 
+  should have the option to pull the host from the domain name (e.g. api.ping.fm.REALDOMAIN)
+type: :feature
+component: flexproxy
+release: 
+reporter: Robert Sanders <rsanders+flexproxy@gmail.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-08-13 21:34:34.263331 Z
+references: []
+
+id: 30ba0691f2187ffc613715f35a1e3d13fbb2bcb4
+log_events: 
+- - 2008-08-13 21:34:37.662865 Z
+  - Robert Sanders <rsanders+flexproxy@gmail.com>
+  - created
+  - ""
