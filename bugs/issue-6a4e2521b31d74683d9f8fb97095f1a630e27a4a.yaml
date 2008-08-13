@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: convert from file url/host store to datastore
+desc: use the google app engine data store instead of files
+type: :feature
+component: flexproxy
+release: 
+reporter: Robert Sanders <rsanders+flexproxy@gmail.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-08-13 21:36:56.902465 Z
+references: []
+
+id: 6a4e2521b31d74683d9f8fb97095f1a630e27a4a
+log_events: 
+- - 2008-08-13 21:36:57.871458 Z
+  - Robert Sanders <rsanders+flexproxy@gmail.com>
+  - created
+  - ""

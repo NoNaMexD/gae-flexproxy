@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: add spellcheck app service
+desc: useful for JS and Flex apps - spellcheck ability
+type: :feature
+component: flexproxy
+release: 
+reporter: Robert Sanders <rsanders+flexproxy@gmail.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-08-13 21:36:28.461524 Z
+references: []
+
+id: b91dc25721f17fa0cb6eed655ed05eda81e5b7f2
+log_events: 
+- - 2008-08-13 21:36:31.286125 Z
+  - Robert Sanders <rsanders+flexproxy@gmail.com>
+  - created
+  - ""
