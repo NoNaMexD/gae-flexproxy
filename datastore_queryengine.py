@@ -22,8 +22,18 @@ class DatastoreQueryEngine(QueryEngine):
                          operand="api.ping.fm",
                          added_by=users.get_current_user())
         entry.put()
-        
+
     def query(self, ns, item):
+        key = "query_" + ns + "_" + item
+        cached = memcache.get(key)
+        if (cached is not None):
+            return bool(cached)
+        res = self._realquery(ns, item)
+        # cache for 10 minutes
+        memcache.set(key, str(res), 600)
+        return res
+
+    def _realquery(self, ns, item):
         query = ProxyACL.all()
 
         query.filter('item =', ns)
