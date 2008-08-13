@@ -68,6 +68,14 @@ class FlexProxy:
             if hdr.lower() == name.lower(): return name
         return hdr
 
+    # determine whether to proxy for this host
+    def validate_host(self, host):
+        return True
+        
+    # determine whether to proxy for this url
+    def validate_url(self, url):
+        return True
+
     def process(self):
         payload = ''
         if os.environ.has_key('CONTENT_LENGTH'):
@@ -95,7 +103,16 @@ class FlexProxy:
         if (m == None):
             raise ValueError
         
-        url = "http://" + m.group(1) + m.group(2)
+        host = m.group(1)
+        path = m.group(2)
+        
+        if (not self.validate_host(host)):
+            raise ValueError
+        
+        url = "http://" + host + path
+        
+        if (not self.validate_url(url)):
+            raise ValueError
 
         if os.environ.has_key('QUERY_STRING'):
             query = os.environ['QUERY_STRING'].strip()
