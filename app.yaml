@@ -6,8 +6,10 @@ api_version: 1
 handlers:
 - url: /crossdomain.xml
   static_files: files/crossdomain.xml
-  upload: files/(.*)
+  upload: files/crossdomain.xml
 
+- url: /assets
+  static_dir: files
 
 - url: .*
   script: main.py

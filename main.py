@@ -25,6 +25,7 @@ import urllib
 import os
 import re
 import sys
+import logging
 
 # import cgitb; cgitb.enable()
 
@@ -38,15 +39,18 @@ import sys
 #     self.response.out.write('Hello world!')
 
 class QueryEngine:
-    z =  "foo"
+    pass
 
-class ProxyPermissionError(Exception):
-    z = "foo"
+class ProxyError(Exception):
+    pass
+
+class ProxyPermissionError(ProxyError):
+    pass
 
 class FileQueryEngine(QueryEngine):
     def get_entries(self, ns):
         try:
-            efile = open("files/db_" + ns)
+            efile = open("conf/db_" + ns)
         except IOError:
             return []
 
@@ -74,7 +78,7 @@ class FileQueryEngine(QueryEngine):
         return self.query("urls", query)
         
 class FlexProxy:
-    def __init__(self, filter_hosts=True, filter_urls=False):
+    def __init__(self, filter_hosts=True, filter_urls=True):
         self.query_engine = FileQueryEngine()
         self.filter_hosts = filter_hosts
         self.filter_urls = filter_urls
@@ -113,7 +117,20 @@ class FlexProxy:
     # determine whether to proxy for this url
     def validate_url(self, url):
         res = self.query_engine.query_url(url)
-        return True
+        return res
+
+    def check_destination(self, host, url):
+        if (not (self.filter_hosts or self.filter_urls)):
+           return True
+        success = False
+        if (self.filter_hosts and self.validate_host(host)):
+            success = True
+        if (self.filter_urls and self.validate_url(url)):
+            success = True
+        if (not success):
+            logging.info("blowing up")
+            raise ProxyPermissionError, ("Destination not allowed", 401)
+        return success
 
     def process(self):
         payload = ''
@@ -124,7 +141,8 @@ class FlexProxy:
         
         headers = {}
         
-        method = self.method_map[ os.environ['REQUEST_METHOD'].lower() ]
+        method_string = os.environ['REQUEST_METHOD']
+        method = self.method_map[ method_string.lower() ]
         
         for hdr in self.copied_headers:
             http_env = 'HTTP_'
@@ -144,24 +162,24 @@ class FlexProxy:
         
         host = m.group(1)
         path = m.group(2)
-        
-        if (self.filter_hosts and not self.validate_host(host)):
-            raise ProxyPermissionError, ("host not allowed", 401)
-        
+
         url = "http://" + host + path
-        
-        if (self.filter_urls and not self.validate_url(url)):
-            raise ProxyPermissionError, ("URL not allowed", 401)
+
+        self.check_destination(host, url)
 
         if os.environ.has_key('QUERY_STRING'):
             query = os.environ['QUERY_STRING'].strip()
             if (query != ''):
                 url = url + '?' + query
         
-        result = urlfetch.fetch(url=url,
+        try:
+            result = urlfetch.fetch(url=url,
                                 payload=payload,
                                 method=method,
                                 headers=headers)
+            logging.info("Result code of " + method_string.upper() + " to url " + url + " = " + str(result.status_code) + ", length of body = " + str(len(result.content)))
+        except Exception:
+            raise ProxyError, ("Can't open page", 404)
 
         #
         # Process results
@@ -186,29 +204,30 @@ class FlexProxy:
 
         print result.content
 
+def showError(message, code=500):
+      if (not code): code = 401
+      print "Status: " + str(code) + " " + message
+      print "Content-Length: " + str(len(message))
+      print "Content-Type: text/plain"
+      print
+      print message
+
 def main():
   # application = webapp.WSGIApplication([('/', MainHandler)],
   #                                      debug=True)
   # wsgiref.handlers.CGIHandler().run(application)
 
-  app = FlexProxy()
+  app = FlexProxy(True, True)
   try:
       app.process()
   except ProxyPermissionError, (message, code):
       if (not code): code = 401
-      body = "Host or URL not allowed: " + str(message)
-      print "Status: " + str(code) + " " + message
-      print "Content-Length: " + str(len(body))
-      print "Content-Type: text/plain"
-      print
-      print body
+      showError("Host or URL not allowed: " + str(message), code)
+  except ProxyError, (message, code):
+      if (not code): code = 400
+      showError("General proxy error: " + str(message), code)
   except Exception, message:
-      body = "Unknown error occurred: " + str(message)
-      print "Status: 500 Unknown Error"
-      print "Content-Length: " + str(len(body))
-      print "Content-Type: text/plain"
-      print
-      print body
+      showError("Unknown error occurred: " + str(message), 500)
 
 if __name__ == '__main__':
   main()
