@@ -18,6 +18,7 @@
 import cgi, urllib
 import os, re, sys, logging
 from google.appengine.api import urlfetch
+from google.appengine.api import memcache
 
 # import wsgiref.handlers
 # import cgitb; cgitb.enable()
@@ -33,6 +34,7 @@ class ProxyPermissionError(ProxyError):
 
 class FileQueryEngine(QueryEngine):
     def get_entries(self, ns):
+        logging.info("opening file conf/db_" + ns)
         try:
             efile = open("conf/db_" + ns)
         except IOError:
@@ -45,6 +47,16 @@ class FileQueryEngine(QueryEngine):
         return entries
 
     def query(self, ns, query):
+        key = "query_" + ns + "_" + query
+        cached = memcache.get(key)
+        if (cached is not None):
+            return bool(cached)
+        res = self._realquery(ns, query)
+        # cache for 10 minutes
+        memcache.set(key, str(res), 600)
+        return res
+
+    def _realquery(self, ns, query):
         entries = self.get_entries(ns)
         for entry in entries:
             if (len(entry) >= 3 and entry[0] == '/' and entry[-1] == '/'):
@@ -54,7 +66,7 @@ class FileQueryEngine(QueryEngine):
                 if (entry.lower() == query.lower()):
                     return True
         return False
-        
+
     def query_host(self, query):
         return self.query("hosts", query)
     

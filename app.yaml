@@ -13,3 +13,7 @@ handlers:
 
 - url: .*
   script: main.py
+
+- url: /admin/.*
+  script: $PYTHON_LIB/google/appengine/ext/admin
+  login: admin
