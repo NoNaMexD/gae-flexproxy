@@ -11,9 +11,9 @@ handlers:
 - url: /assets
   static_dir: files
 
-- url: .*
-  script: main.py
-
 - url: /admin/.*
   script: $PYTHON_LIB/google/appengine/ext/admin
   login: admin
+
+- url: .*
+  script: main.py
