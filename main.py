@@ -15,28 +15,12 @@
 # limitations under the License.
 #
 
-
-
-
-import wsgiref.handlers
-import cgi
+import cgi, urllib
+import os, re, sys, logging
 from google.appengine.api import urlfetch
-import urllib
-import os
-import re
-import sys
-import logging
 
+# import wsgiref.handlers
 # import cgitb; cgitb.enable()
-
-
-# from google.appengine.ext import webapp
-
-
-# class MainHandler(webapp.RequestHandler):
-# 
-#   def get(self):
-#     self.response.out.write('Hello world!')
 
 class QueryEngine:
     pass
@@ -213,10 +197,6 @@ def showError(message, code=500):
       print message
 
 def main():
-  # application = webapp.WSGIApplication([('/', MainHandler)],
-  #                                      debug=True)
-  # wsgiref.handlers.CGIHandler().run(application)
-
   app = FlexProxy(True, True)
   try:
       app.process()

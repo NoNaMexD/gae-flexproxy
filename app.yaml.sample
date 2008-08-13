@@ -1,0 +1,15 @@
+application: YOUR_APPNAME_HERE
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+- url: /crossdomain.xml
+  static_files: files/crossdomain.xml
+  upload: files/crossdomain.xml
+
+- url: /assets
+  static_dir: files
+
+- url: .*
+  script: main.py
