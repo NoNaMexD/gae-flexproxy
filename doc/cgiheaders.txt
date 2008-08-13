@@ -1,0 +1,52 @@
+SCRIPT_NAME: 
+ 
+REQUEST_METHOD: GET
+ 
+PATH_INFO: /
+ 
+SERVER_PROTOCOL: HTTP/1.0
+ 
+QUERY_STRING: 
+ 
+CONTENT_LENGTH: 
+ 
+HTTP_USER_AGENT: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_5_4; en-us) AppleWebKit/525.18 (KHTML, like Gecko) Version/3.1.2 Safari/525.20.1
+ 
+HTTP_CONNECTION: keep-alive
+ 
+SERVER_NAME: localhost
+ 
+REMOTE_ADDR: 127.0.0.1
+ 
+PATH_TRANSLATED: /Users/Shared/vitrue/src/opensource/gae/test1/main.py
+ 
+SERVER_PORT: 8080
+ 
+AUTH_DOMAIN: gmail.com
+ 
+CURRENT_VERSION_ID: 1.1
+ 
+HTTP_HOST: localhost:8080
+ 
+TZ: UTC
+ 
+HTTP_CACHE_CONTROL: max-age=0
+ 
+USER_EMAIL: 
+ 
+HTTP_ACCEPT: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
+ 
+APPLICATION_ID: test1
+ 
+GATEWAY_INTERFACE: CGI/1.1
+ 
+HTTP_ACCEPT_LANGUAGE: en-us
+ 
+CONTENT_TYPE: application/x-www-form-urlencoded
+ 
+HTTP_ACCEPT_ENCODING: gzip, deflate
+ 
+Content-Length: 4334
+Server: Apache/2.2.3 (Debian) DAV/2 SVN/1.4.2 mod_python/3.2.10 Python/2.4.4 PHP/5.2.5-0.dotdeb.2 with Suhosin-Patch mod_ssl/2.2.3 OpenSSL/0.9.8c mod_perl/2.0.2 Perl/v5.8.8
+Content-Type: text/xml
+X-Powered-By: PHP/5.2.5-0.dotdeb.2

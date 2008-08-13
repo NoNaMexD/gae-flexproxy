@@ -18,10 +18,12 @@
 
 
 
-# import wsgiref.handlers
+import wsgiref.handlers
 import cgi
 from google.appengine.api import urlfetch
 import urllib
+import os
+import re
 
 # import cgitb; cgitb.enable()
 
@@ -39,13 +41,31 @@ class FlexProxy:
     # def __init__(baseurl):
     #     self.baseurl = baseurl
 
-    headermap = {
-        'server': 'Server',
-        'content-length': 'Content-Length',
-        'content-type': 'Content-Type',
-        'date': 'Date',
-        'x-powered-by': 'X-Powered-By'
+    copied_headers = [
+        'Server',
+        'Content-Length',
+        'Content-Type',
+        'Date',
+        'X-Powered-By',
+        'Accept',
+        'Accept-Language',
+        'Accept-Encoding',
+        'Cache-Control',
+        'Pragma'
+    ]
+    
+    method_map = {
+        'get':     urlfetch.GET,
+        'post':    urlfetch.POST,
+        'head':    urlfetch.HEAD,
+        'put':     urlfetch.PUT,
+        'delete':  urlfetch.DELETE
     }
+
+    def xlate_header(self, hdr):
+        for name in self.copied_headers:
+            if hdr.lower() == name.lower(): return name
+        return hdr
 
     def process(self):
         data = {
@@ -53,21 +73,52 @@ class FlexProxy:
           "user_app_key": "8425ab6700ac14eacdc77acf3283d69b-1217912257"
         }
         encoded_data = urllib.urlencode(data)
-        result = urlfetch.fetch(url="http://api.ping.fm/v1/user.latest",
+        
+        headers = {}
+        
+        # XXX: lame
+        # if (os.environ['HTTP_METHOD'].lower() == 'get'):
+        #     method = urlfetch.GET
+        # else:
+        #     method = urlfetch.POST
+        
+        method = self.method_map[ os.environ['REQUEST_METHOD'].lower() ]
+        
+        for hdr in self.copied_headers:
+            http_env = 'HTTP_'
+            val = None
+            if os.environ.has_key('HTTP_' + hdr.upper()):
+                val = os.environ['HTTP_' + hdr.upper()]
+            elif os.environ.has_key(hdr.upper()):
+                val = os.environ[hdr.upper()]
+
+            if (val != None):
+                headers[hdr] = val
+        
+        url="http://api.ping.fm/v1/user.latest"
+        
+        m = re.search('^/([^/]+)(/.*)$', os.environ['PATH_INFO'])
+        
+        result = urlfetch.fetch(url,
                                 payload=encoded_data,
-                                method=urlfetch.POST,
-                                headers={'Content-Type': 'application/x-www-form-urlencoded'})
+                                method=method,
+                                headers=headers)
+
+        #
+        # Process results
+        #
 
         for name in result.headers:
             if (name.lower() == 'date'): continue
             val = result.headers[name]
-            if (name in self.headermap): name = self.headermap[name]
+            name = self.xlate_header(name)
             print name + ": " + val + "\r\n",
 
-        #print "Content-Length: " + str(len(result.content))
-        #print "Content-Type: " + result.headers['content-type']
-
         print
+
+        # for var in os.environ.keys():
+        #     print var + ": " + os.environ.get(var) + "\n"
+
         print result.content
 
 def main():
