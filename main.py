@@ -37,10 +37,47 @@ import sys
 #   def get(self):
 #     self.response.out.write('Hello world!')
 
+class QueryEngine:
+    z =  "foo"
 
+class ProxyPermissionError(Exception):
+    z = "foo"
+
+class FileQueryEngine(QueryEngine):
+    def get_entries(self, ns):
+        try:
+            efile = open("files/db_" + ns)
+        except IOError:
+            return []
+
+        entries = []
+        for line in efile:
+            entries.append(line.strip())
+        efile.close()
+        return entries
+
+    def query(self, ns, query):
+        entries = self.get_entries(ns)
+        for entry in entries:
+            if (len(entry) >= 3 and entry[0] == '/' and entry[-1] == '/'):
+                if (re.match(entry[1:-1], query)):
+                    return True
+            else:
+                if (entry.lower() == query.lower()):
+                    return True
+        return False
+        
+    def query_host(self, query):
+        return self.query("hosts", query)
+    
+    def query_url(self, query):
+        return self.query("urls", query)
+        
 class FlexProxy:
-    # def __init__(baseurl):
-    #     self.baseurl = baseurl
+    def __init__(self, filter_hosts=True, filter_urls=False):
+        self.query_engine = FileQueryEngine()
+        self.filter_hosts = filter_hosts
+        self.filter_urls = filter_urls
 
     copied_headers = [
         'Server',
@@ -70,15 +107,17 @@ class FlexProxy:
 
     # determine whether to proxy for this host
     def validate_host(self, host):
-        return True
+        res = self.query_engine.query_host(host)
+        return res
         
     # determine whether to proxy for this url
     def validate_url(self, url):
+        res = self.query_engine.query_url(url)
         return True
 
     def process(self):
         payload = ''
-        if os.environ.has_key('CONTENT_LENGTH'):
+        if (os.environ.has_key('CONTENT_LENGTH') and len(os.environ['CONTENT_LENGTH'].strip()) > 0):
             length = int(os.environ['CONTENT_LENGTH'].strip())
             if (length > 0):
                 payload = sys.stdin.read(length)
@@ -106,13 +145,13 @@ class FlexProxy:
         host = m.group(1)
         path = m.group(2)
         
-        if (not self.validate_host(host)):
-            raise ValueError
+        if (self.filter_hosts and not self.validate_host(host)):
+            raise ProxyPermissionError, ("host not allowed", 401)
         
         url = "http://" + host + path
         
-        if (not self.validate_url(url)):
-            raise ValueError
+        if (self.filter_urls and not self.validate_url(url)):
+            raise ProxyPermissionError, ("URL not allowed", 401)
 
         if os.environ.has_key('QUERY_STRING'):
             query = os.environ['QUERY_STRING'].strip()
@@ -141,10 +180,6 @@ class FlexProxy:
             name = self.xlate_header(name)
             print name + ": " + val + "\r\n",
 
-
-        print "ResultObject-Dir: " + ", ".join(dir(result))
-        print "Header-Keys: " + ", ".join(result.headers.keys())
-
         # end headers and print content
 
         print
@@ -157,7 +192,23 @@ def main():
   # wsgiref.handlers.CGIHandler().run(application)
 
   app = FlexProxy()
-  app.process()
+  try:
+      app.process()
+  except ProxyPermissionError, (message, code):
+      if (not code): code = 401
+      body = "Host or URL not allowed: " + str(message)
+      print "Status: " + str(code) + " " + message
+      print "Content-Length: " + str(len(body))
+      print "Content-Type: text/plain"
+      print
+      print body
+  except Exception, message:
+      body = "Unknown error occurred: " + str(message)
+      print "Status: 500 Unknown Error"
+      print "Content-Length: " + str(len(body))
+      print "Content-Type: text/plain"
+      print
+      print body
 
 if __name__ == '__main__':
   main()
