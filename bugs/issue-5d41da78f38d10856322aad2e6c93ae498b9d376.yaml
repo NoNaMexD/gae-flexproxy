@@ -1,0 +1,20 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: rewrite cookies to work properly
+desc: |-
+  a cookie that is set by a site with domain=foo.bar, path=/ should be rewritten to
+  domain=vitgaetest1.appspot.com, path=/foo.bar/
+type: :feature
+component: flexproxy
+release: 
+reporter: Robert Sanders <rsanders+flexproxy@gmail.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-08-14 00:33:14.076206 Z
+references: []
+
+id: 5d41da78f38d10856322aad2e6c93ae498b9d376
+log_events: 
+- - 2008-08-14 00:33:15.172847 Z
+  - Robert Sanders <rsanders+flexproxy@gmail.com>
+  - created
+  - ""

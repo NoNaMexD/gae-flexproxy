@@ -7,8 +7,8 @@ type: :feature
 component: flexproxy
 release: 
 reporter: Robert Sanders <rsanders+flexproxy@gmail.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :wontfix
 creation_time: 2008-08-13 21:34:34.263331 Z
 references: []
 
@@ -18,3 +18,7 @@ log_events:
   - Robert Sanders <rsanders+flexproxy@gmail.com>
   - created
   - ""
+- - 2008-08-14 00:34:14.757986 Z
+  - Robert Sanders <rsanders+flexproxy@gmail.com>
+  - closed with disposition wontfix
+  - i don't think this is possible with GAE's current domain mapping (no wildcards)

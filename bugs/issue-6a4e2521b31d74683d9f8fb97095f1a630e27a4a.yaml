@@ -5,8 +5,8 @@ type: :feature
 component: flexproxy
 release: 
 reporter: Robert Sanders <rsanders+flexproxy@gmail.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2008-08-13 21:36:56.902465 Z
 references: []
 
@@ -15,4 +15,8 @@ log_events:
 - - 2008-08-13 21:36:57.871458 Z
   - Robert Sanders <rsanders+flexproxy@gmail.com>
   - created
+  - ""
+- - 2008-08-14 00:33:42.788468 Z
+  - Robert Sanders <rsanders+flexproxy@gmail.com>
+  - closed with disposition fixed
   - ""
