@@ -1,0 +1,21 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: allow specification of method in URL or args
+desc: |-
+  e.g. /proxy/get/$DOMAIN or appending ?_proxy_method=get or somesuch
+  this will be necessary to support JSONP, which because it uses a <script> tag, depends
+  on making GETs even for POST_required APIs
+type: :feature
+component: flexproxy
+release: "0.2"
+reporter: Robert Sanders <rsanders+flexproxy@gmail.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-08-20 22:09:15.039920 Z
+references: []
+
+id: fc0863a1514a585bc0c236db21d12167dc7680da
+log_events: 
+- - 2008-08-20 22:09:16.447852 Z
+  - Robert Sanders <rsanders+flexproxy@gmail.com>
+  - created
+  - ""

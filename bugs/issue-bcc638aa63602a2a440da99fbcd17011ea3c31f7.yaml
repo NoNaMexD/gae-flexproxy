@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: transparent plugin for prototype ajax function
+desc: alow overriding of Prototype's ajax function with a proxy-enabled one
+type: :feature
+component: flexproxy
+release: "0.5"
+reporter: Robert Sanders <rsanders+flexproxy@gmail.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-08-20 22:11:11.481656 Z
+references: []
+
+id: bcc638aa63602a2a440da99fbcd17011ea3c31f7
+log_events: 
+- - 2008-08-20 22:11:12.402466 Z
+  - Robert Sanders <rsanders+flexproxy@gmail.com>
+  - created
+  - ""

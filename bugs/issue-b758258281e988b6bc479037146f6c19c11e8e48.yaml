@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: support transparent plugin for jquery ajax function
+desc: allow overriding of jQuery.ajax with a proxy-enabled one
+type: :feature
+component: flexproxy
+release: "0.5"
+reporter: Robert Sanders <rsanders+flexproxy@gmail.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-08-20 22:10:45.473569 Z
+references: []
+
+id: b758258281e988b6bc479037146f6c19c11e8e48
+log_events: 
+- - 2008-08-20 22:10:46.433485 Z
+  - Robert Sanders <rsanders+flexproxy@gmail.com>
+  - created
+  - ""
