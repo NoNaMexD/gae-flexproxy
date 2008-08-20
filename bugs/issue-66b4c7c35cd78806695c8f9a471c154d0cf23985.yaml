@@ -1,22 +1,22 @@
 --- !ditz.rubyforge.org,2008-03-06/issue 
-title: add spellcheck app service
-desc: useful for JS and Flex apps - spellcheck ability
+title: forms for editing databases
+desc: provide admin forms for editing databases
 type: :feature
 component: flexproxy
-release: "0.4"
+release: "0.3"
 reporter: Robert Sanders <rsanders+flexproxy@gmail.com>
 status: :unstarted
 disposition: 
-creation_time: 2008-08-13 21:36:28.461524 Z
+creation_time: 2008-08-20 15:56:32.190865 Z
 references: []
 
-id: b91dc25721f17fa0cb6eed655ed05eda81e5b7f2
+id: 66b4c7c35cd78806695c8f9a471c154d0cf23985
 log_events: 
-- - 2008-08-13 21:36:31.286125 Z
+- - 2008-08-20 15:56:33.494488 Z
   - Robert Sanders <rsanders+flexproxy@gmail.com>
   - created
   - ""
-- - 2008-08-20 16:20:08.719026 Z
+- - 2008-08-20 16:19:21.305261 Z
   - Robert Sanders <rsanders+flexproxy@gmail.com>
-  - assigned to release 0.4 from unassigned
+  - assigned to release 0.3 from unassigned
   - ""

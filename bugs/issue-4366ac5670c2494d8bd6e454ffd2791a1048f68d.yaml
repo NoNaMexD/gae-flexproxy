@@ -1,0 +1,22 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: make it easier to integrate with existing sites
+desc: Make this a module which can live alongside existing GAE django sites
+type: :feature
+component: flexproxy
+release: "0.3"
+reporter: Robert Sanders <rsanders+flexproxy@gmail.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-08-20 16:15:41.180780 Z
+references: []
+
+id: 4366ac5670c2494d8bd6e454ffd2791a1048f68d
+log_events: 
+- - 2008-08-20 16:15:41.964366 Z
+  - Robert Sanders <rsanders+flexproxy@gmail.com>
+  - created
+  - ""
+- - 2008-08-20 16:19:36.896901 Z
+  - Robert Sanders <rsanders+flexproxy@gmail.com>
+  - assigned to release 0.3 from unassigned
+  - ""

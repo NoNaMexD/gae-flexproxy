@@ -1,0 +1,24 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: learning mode
+desc: |-
+  Allow for turning on of learning mode, where hostnames / urls are inserted
+  into the DB as accessed, to make for easier provisioning
+type: :feature
+component: flexproxy
+release: "0.3"
+reporter: Robert Sanders <rsanders+flexproxy@gmail.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-08-20 16:16:22.117081 Z
+references: []
+
+id: 024fb77e6360910bcfa0340d1befb1ea0a2b351e
+log_events: 
+- - 2008-08-20 16:16:22.636227 Z
+  - Robert Sanders <rsanders+flexproxy@gmail.com>
+  - created
+  - ""
+- - 2008-08-20 16:19:27.923979 Z
+  - Robert Sanders <rsanders+flexproxy@gmail.com>
+  - assigned to release 0.3 from unassigned
+  - ""

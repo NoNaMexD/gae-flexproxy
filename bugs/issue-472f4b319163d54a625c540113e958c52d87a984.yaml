@@ -1,0 +1,24 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: allow usage for non-flex (JS) apps
+desc: |-
+  Use one of the iframe hacks to allow use of the flex proxy from JS/HTML files
+  hosted on other websites
+  
+  use dojo or facebook-like method?
+  
+  provide a library which can be loaded from a well-known url
+type: :feature
+component: flexproxy
+release: "0.4"
+reporter: Robert Sanders <rsanders+flexproxy@gmail.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-08-20 16:21:27.528351 Z
+references: []
+
+id: 472f4b319163d54a625c540113e958c52d87a984
+log_events: 
+- - 2008-08-20 16:21:28.937365 Z
+  - Robert Sanders <rsanders+flexproxy@gmail.com>
+  - created
+  - ""

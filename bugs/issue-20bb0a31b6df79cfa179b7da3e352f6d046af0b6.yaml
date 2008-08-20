@@ -1,0 +1,25 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: authorization credentials for unlisted hosts
+desc: |-
+  For hosts/urls not in the allow database, use provided authentication credentials
+  should support both app and oauth-style credentials...or maybe a cookie that isn't
+  passed thru.
+type: :feature
+component: flexproxy
+release: "0.3"
+reporter: Robert Sanders <rsanders+flexproxy@gmail.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-08-20 15:56:07.454472 Z
+references: []
+
+id: 20bb0a31b6df79cfa179b7da3e352f6d046af0b6
+log_events: 
+- - 2008-08-20 15:56:09.335169 Z
+  - Robert Sanders <rsanders+flexproxy@gmail.com>
+  - created
+  - ""
+- - 2008-08-20 16:19:56.337305 Z
+  - Robert Sanders <rsanders+flexproxy@gmail.com>
+  - assigned to release 0.3 from unassigned
+  - ""
