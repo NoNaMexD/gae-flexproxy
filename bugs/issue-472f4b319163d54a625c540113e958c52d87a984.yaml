@@ -7,6 +7,10 @@ desc: |-
   use dojo or facebook-like method?
   
   provide a library which can be loaded from a well-known url
+  
+  Possibly use some variant of JSONP?
+  
+  References: http://digitalmihailo.blogspot.com/2008/05/make-jsonp-work-in-firefox-chrome.html
 type: :feature
 component: flexproxy
 release: "0.4"
@@ -22,3 +26,7 @@ log_events:
   - Robert Sanders <rsanders+flexproxy@gmail.com>
   - created
   - ""
+- - 2008-08-20 18:59:41.421853 Z
+  - Robert Sanders <rsanders+flexproxy@gmail.com>
+  - changed description
+  - added some ref info
