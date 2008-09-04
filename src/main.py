@@ -15,6 +15,9 @@
 # limitations under the License.
 #
 
+import sys, os
+sys.path.append(os.path.dirname(__file__))
+
 import logging
 
 from org.esquimaux.flexproxy.proxy import *

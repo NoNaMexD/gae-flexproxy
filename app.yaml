@@ -16,8 +16,8 @@ handlers:
   login: admin
 
 - url: /util/install
-  script: src/org/esquimaux/flexproxy/install.py
+  script: src/install.py
   login: admin
 
 - url: /proxy/.*
-  script: src/org/esquimaux/flexproxy/main.py
+  script: src/main.py
