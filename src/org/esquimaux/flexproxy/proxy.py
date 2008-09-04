@@ -67,10 +67,23 @@ class FlexProxy:
         'delete':  urlfetch.DELETE
     }
 
-    def xlate_header(self, hdr):
+    def xlate_header_name(self, hdr):
         for name in self.copied_headers:
             if hdr.lower() == name.lower(): return name
         return hdr
+
+    def xlate_cookie_header(self, val, prefix='/proxy'):
+        cookies = [self.xlate_cookie(cookie.strip(), prefix) for cookie in val.split(",")]
+        return ", ".join(cookies)
+
+    def xlate_cookie(self, cookie, prefix='/proxy'):
+        # add or change path
+        if cookie.find("path=") == -1:
+            cookie = cookie + "; path=/" + prefix.lstrip("/")
+        else:
+            cookie = re.sub('path=/', 'path=/' + prefix.lstrip('/'), cookie)
+        return cookie
+        
 
     # determine whether to proxy for this host
     def validate_host(self, host):
@@ -132,6 +145,8 @@ class FlexProxy:
         protocol = m.group(1)
         host = m.group(2)
         path = m.group(3)
+        
+        cookie_prefix = prefix + '/' + protocol + '/' + host
 
         url = protocol + "://" + host + path
 
@@ -165,7 +180,9 @@ class FlexProxy:
         for name in result.headers:
             if (name.lower() == 'date'): continue
             val = result.headers[name]
-            name = self.xlate_header(name)
+            name = self.xlate_header_name(name)
+            if name.lower() == 'set-cookie':
+                val = self.xlate_cookie_header(val, cookie_prefix)
             print name + ": " + val + "\r\n",
 
         # end headers and print content
