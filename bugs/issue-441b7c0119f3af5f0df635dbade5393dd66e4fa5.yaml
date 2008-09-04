@@ -5,7 +5,7 @@ desc: |-
   docs / help files / debugging
 type: :feature
 component: flexproxy
-release: "0.2"
+release: "0.3"
 reporter: Robert Sanders <rsanders+flexproxy@gmail.com>
 status: :unstarted
 disposition: 
@@ -21,4 +21,8 @@ log_events:
 - - 2008-08-20 16:19:01.158339 Z
   - Robert Sanders <rsanders+flexproxy@gmail.com>
   - assigned to release 0.2 from unassigned
+  - ""
+- - 2008-09-04 04:48:30.578645 Z
+  - Robert Sanders <rsanders+flexproxy@gmail.com>
+  - assigned to release 0.3 from 0.2
   - ""

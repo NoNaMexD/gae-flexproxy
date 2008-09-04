@@ -3,7 +3,7 @@ title: easy API usage and status codes
 desc: Make sure it's easy to test / detect failure of access to certain URLs
 type: :feature
 component: flexproxy
-release: "0.2"
+release: "0.3"
 reporter: Robert Sanders <rsanders+flexproxy@gmail.com>
 status: :unstarted
 disposition: 
@@ -19,4 +19,8 @@ log_events:
 - - 2008-08-20 16:19:30.652831 Z
   - Robert Sanders <rsanders+flexproxy@gmail.com>
   - assigned to release 0.2 from unassigned
+  - ""
+- - 2008-09-04 04:48:33.147333 Z
+  - Robert Sanders <rsanders+flexproxy@gmail.com>
+  - assigned to release 0.3 from 0.2
   - ""

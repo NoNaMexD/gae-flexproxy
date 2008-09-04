@@ -6,7 +6,7 @@ desc: |-
   on making GETs even for POST_required APIs
 type: :feature
 component: flexproxy
-release: "0.2"
+release: "0.3"
 reporter: Robert Sanders <rsanders+flexproxy@gmail.com>
 status: :unstarted
 disposition: 
@@ -18,4 +18,8 @@ log_events:
 - - 2008-08-20 22:09:16.447852 Z
   - Robert Sanders <rsanders+flexproxy@gmail.com>
   - created
+  - ""
+- - 2008-09-04 04:48:35.299287 Z
+  - Robert Sanders <rsanders+flexproxy@gmail.com>
+  - assigned to release 0.3 from 0.2
   - ""
