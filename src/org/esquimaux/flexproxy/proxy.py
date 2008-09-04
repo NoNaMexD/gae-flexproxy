@@ -15,14 +15,18 @@
 # limitations under the License.
 #
 
-import cgi, urllib
+import cgi
 import os, re, sys, logging
 from google.appengine.api import urlfetch
 from google.appengine.api import memcache
 
-import queryengine
-from datastore_queryengine import *
-from file_queryengine import *
+#import queryengine
+from org.esquimaux.flexproxy.store.queryengine import *
+from org.esquimaux.flexproxy.store.file_queryengine import *
+from org.esquimaux.flexproxy.store.datastore_queryengine import *
+
+#from datastore_queryengine import *
+#from file_queryengine import *
 
 # import wsgiref.handlers
 # import cgitb; cgitb.enable()
@@ -80,7 +84,7 @@ class FlexProxy:
 
     def check_destination(self, host, url):
         if (not (self.filter_hosts or self.filter_urls)):
-           return True
+            return True
         success = False
         if (self.filter_hosts and self.validate_host(host)):
             success = True
@@ -104,7 +108,6 @@ class FlexProxy:
         method = self.method_map[ method_string.lower() ]
         
         for hdr in self.copied_headers:
-            http_env = 'HTTP_'
             val = None
             if os.environ.has_key('HTTP_' + hdr.upper()):
                 val = os.environ['HTTP_' + hdr.upper()]
@@ -164,12 +167,12 @@ class FlexProxy:
         print result.content
 
 def showError(message, code=500):
-      if (not code): code = 401
-      print "Status: " + str(code) + " " + message
-      print "Content-Length: " + str(len(message))
-      print "Content-Type: text/plain"
-      print
-      print message
+    if (not code): code = 401
+    print "Status: " + str(code) + " " + message
+    print "Content-Length: " + str(len(message))
+    print "Content-Type: text/plain"
+    print
+    print message
 
 def main():
   app = FlexProxy(True, True)
@@ -185,4 +188,4 @@ def main():
       showError("Unknown error occurred: " + str(message), 500)
 
 if __name__ == '__main__':
-  main()
+    main()

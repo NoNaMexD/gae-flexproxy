@@ -1,4 +1,4 @@
-application: YOUR_APPNAME_HERE
+application: YOUR_APP_NAME_HERE
 version: 1
 runtime: python
 api_version: 1
@@ -15,5 +15,9 @@ handlers:
   script: $PYTHON_LIB/google/appengine/ext/admin
   login: admin
 
-- url: .*
-  script: main.py
+- url: /util/install
+  script: org/esquimaux/flexproxy/install.py
+  login: admin
+
+- url: /proxy/.*
+  script: org/esquimaux/flexproxy/main.py

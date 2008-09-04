@@ -1,5 +1,4 @@
-from queryengine import *
-from datastore_queryengine import *
+from org.esquimaux.flexproxy.store.datastore_queryengine import *
 
 def main():
     ds = DatastoreQueryEngine()
@@ -8,5 +7,5 @@ def main():
     print "Done"
 
 if __name__ == '__main__':
-  main()
+    main()
 

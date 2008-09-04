@@ -1,7 +1,7 @@
-from queryengine import *
-from google.appengine.api import memcache
-import cgi, urllib
 import os, re, sys, logging
+
+from org.esquimaux.flexproxy.store.queryengine import QueryEngine
+from google.appengine.api import memcache
 
 class FileQueryEngine(QueryEngine):
     def get_entries(self, ns):

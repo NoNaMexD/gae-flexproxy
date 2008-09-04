@@ -1,18 +1,17 @@
-import cgi, urllib
 import os, re, sys, logging
 
 from google.appengine.ext import db
 from google.appengine.api import users
 from google.appengine.api import memcache
-from queryengine import *
+from org.esquimaux.flexproxy.store.queryengine import QueryEngine
 
 class ProxyACL(db.Model):
-  name = db.StringProperty(required=False)
-  item = db.StringProperty(required=True, choices=set(["url", "host"]))
-  operator = db.StringProperty(required=True, choices=set(["exact", "regex"]))
-  operand = db.StringProperty(required=True)
-  added = db.DateTimeProperty(auto_now_add=True)
-  added_by = db.UserProperty()
+    name = db.StringProperty(required=False)
+    item = db.StringProperty(required=True, choices=set(["url", "host"]))
+    operator = db.StringProperty(required=True, choices=set(["exact", "regex"]))
+    operand = db.StringProperty(required=True)
+    added = db.DateTimeProperty(auto_now_add=True)
+    added_by = db.UserProperty()
 
 class DatastoreQueryEngine(QueryEngine):
     def seed(self):

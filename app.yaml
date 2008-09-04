@@ -15,9 +15,9 @@ handlers:
   script: $PYTHON_LIB/google/appengine/ext/admin
   login: admin
 
-- url: /install
-  script: install.py
+- url: /util/install
+  script: org/esquimaux/flexproxy/install.py
   login: admin
 
-- url: .*
-  script: main.py
+- url: /proxy/.*
+  script: org/esquimaux/flexproxy/main.py
