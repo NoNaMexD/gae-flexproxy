@@ -21,3 +21,6 @@ handlers:
 
 - url: /proxy/.*
   script: src/main.py
+
+- url: /.*
+  script: src/flexproxyadmin/main.py
