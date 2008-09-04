@@ -84,6 +84,19 @@ class FlexProxy:
             cookie = re.sub('path=/', 'path=/' + prefix.lstrip('/'), cookie)
         return cookie
         
+    def parse_query_string(self, query):
+        pairs = query.split('&')
+        query = ""
+        sep = ""
+        fpargs = {}
+        for pair in pairs:
+            if (pair.startswith("__fp_")):
+                (key, val) = pair.split('=', 2)
+                fpargs[key[5:]] = val
+            else:
+                query = query + sep + pair
+                sep = "&"
+        return (query, fpargs)
 
     # determine whether to proxy for this host
     def validate_host(self, host):
@@ -117,9 +130,6 @@ class FlexProxy:
         
         headers = {}
         
-        method_string = os.environ['REQUEST_METHOD']
-        method = self.method_map[ method_string.lower() ]
-        
         for hdr in self.copied_headers:
             val = None
             if os.environ.has_key('HTTP_' + hdr.upper()):
@@ -148,14 +158,29 @@ class FlexProxy:
         
         cookie_prefix = prefix + '/' + protocol + '/' + host
 
-        url = protocol + "://" + host + path
+        url = nonquery_url = protocol + "://" + host + path
 
         self.check_destination(host, url)
 
+        fpargs = {}
+        query = ''
         if os.environ.has_key('QUERY_STRING'):
             query = os.environ['QUERY_STRING'].strip()
             if (query != ''):
+                (query, fpargs) = self.parse_query_string(query)
                 url = url + '?' + query
+        
+        method_string = os.environ['REQUEST_METHOD']
+        if fpargs.has_key('method'):
+            method_string = fpargs['method']
+
+        method = self.method_map[ method_string.lower() ]
+
+        # if we're faking a POST, move the query args into the body
+        if fpargs.has_key('method') and method == urlfetch.POST and len(payload) == 0:
+            payload = query
+            headers['Content-Type'] = 'application/x-www-form-urlencoded'
+            url = nonquery_url
         
         try:
             result = urlfetch.fetch(url=url,

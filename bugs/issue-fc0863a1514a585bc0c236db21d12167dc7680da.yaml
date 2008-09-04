@@ -8,8 +8,8 @@ type: :feature
 component: flexproxy
 release: "0.3"
 reporter: Robert Sanders <rsanders+flexproxy@gmail.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2008-08-20 22:09:15.039920 Z
 references: []
 
@@ -23,3 +23,10 @@ log_events:
   - Robert Sanders <rsanders+flexproxy@gmail.com>
   - assigned to release 0.3 from 0.2
   - ""
+- - 2008-09-04 05:19:53.157484 Z
+  - Robert Sanders <rsanders+flexproxy@gmail.com>
+  - closed with disposition fixed
+  - |-
+    add a __fp_method=POST or whatnot to the query argument list and it'll translate
+    into the appropriate method.  will move query args from the URL to the body if
+    method = POST
