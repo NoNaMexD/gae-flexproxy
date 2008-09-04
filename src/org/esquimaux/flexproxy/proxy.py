@@ -95,7 +95,7 @@ class FlexProxy:
             raise ProxyPermissionError, ("Destination not allowed", 401)
         return success
 
-    def process(self):
+    def process(self, prefix="/proxy"):
         payload = ''
         if (os.environ.has_key('CONTENT_LENGTH') and len(os.environ['CONTENT_LENGTH'].strip()) > 0):
             length = int(os.environ['CONTENT_LENGTH'].strip())
@@ -117,15 +117,23 @@ class FlexProxy:
             if (val != None):
                 headers[hdr] = val
 
-        m = re.match('^/([^/]+)(/.*)$', os.environ['PATH_INFO'])
+        # http://flexproxy.appspot.com/proxy/http/api.ping.fm/v1/system.services?foo=bar
+        
+        path = os.environ['PATH_INFO']
+
+        if prefix and len(prefix) > 0 and path.startswith(prefix):
+            path = path[len(prefix):]
+
+        m = re.match('^/([^/]+)/([^/]+)(/.*)$', path)
         
         if (m == None):
             raise ValueError
         
-        host = m.group(1)
-        path = m.group(2)
+        protocol = m.group(1)
+        host = m.group(2)
+        path = m.group(3)
 
-        url = "http://" + host + path
+        url = protocol + "://" + host + path
 
         self.check_destination(host, url)
 
