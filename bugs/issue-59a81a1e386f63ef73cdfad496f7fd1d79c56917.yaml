@@ -1,0 +1,20 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: add support for jsonrequest / json-p proxying
+desc: |-
+  For use by same-domain-restricted Javascript, support JSON-P / JSONRequest
+  proxying
+type: :feature
+component: flexproxy
+release: 
+reporter: Robert Sanders <rsanders+flexproxy@gmail.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-12-11 04:15:16.104230 Z
+references: []
+
+id: 59a81a1e386f63ef73cdfad496f7fd1d79c56917
+log_events: 
+- - 2008-12-11 04:15:17.328889 Z
+  - Robert Sanders <rsanders+flexproxy@gmail.com>
+  - created
+  - ""
